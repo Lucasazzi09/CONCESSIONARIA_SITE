@@ -20,6 +20,8 @@ export default function AuditoriaPage() {
   const [filtroUsuario, setFiltroUsuario] = useState('');
   const [filtroTabela, setFiltroTabela] = useState('');
   const [filtroAcao, setFiltroAcao] = useState('');
+  const [dataInicio, setDataInicio] = useState('');
+  const [dataFim, setDataFim] = useState('');
   const [logSelecionado, setLogSelecionado] = useState<Log | null>(null);
 
   function compararObjetos(antes: any, depois: any) {
@@ -45,7 +47,7 @@ export default function AuditoriaPage() {
 
   useEffect(() => {
     carregarLogs();
-  }, [filtroUsuario, filtroTabela, filtroAcao]);
+  }, [filtroUsuario, filtroTabela, filtroAcao, dataInicio, dataFim]);
 
   async function carregarLogs() {
     setCarregando(true);
@@ -54,6 +56,8 @@ export default function AuditoriaPage() {
       if (filtroUsuario) params.append('usuario', filtroUsuario);
       if (filtroTabela) params.append('tabela', filtroTabela);
       if (filtroAcao) params.append('acao', filtroAcao);
+      if (dataInicio) params.append('data_inicio', dataInicio);
+      if (dataFim) params.append('data_fim', dataFim);
 
       const res = await fetch(`/api/auditoria?${params}`);
       const data = await res.json();
@@ -106,6 +110,22 @@ export default function AuditoriaPage() {
           style={styles.input}
         />
         
+        <input
+          type="date"
+          value={dataInicio}
+          onChange={(e) => setDataInicio(e.target.value)}
+          style={styles.input}
+          title="Data Início"
+        />
+
+        <input
+          type="date"
+          value={dataFim}
+          onChange={(e) => setDataFim(e.target.value)}
+          style={styles.input}
+          title="Data Fim"
+        />
+
         <select
           value={filtroTabela}
           onChange={(e) => setFiltroTabela(e.target.value)}
@@ -129,12 +149,14 @@ export default function AuditoriaPage() {
           <option value="DELETE">Exclusão</option>
         </select>
 
-        {(filtroUsuario || filtroTabela || filtroAcao) && (
+        {(filtroUsuario || filtroTabela || filtroAcao || dataInicio || dataFim) && (
           <button
             onClick={() => {
               setFiltroUsuario('');
               setFiltroTabela('');
               setFiltroAcao('');
+              setDataInicio('');
+              setDataFim('');
             }}
             style={styles.botaoLimpar}
           >
