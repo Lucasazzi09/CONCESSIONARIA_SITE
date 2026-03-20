@@ -179,9 +179,8 @@ export default function PersonalizacaoPage() {
       )}
 
       <div style={styles.aviso}>
-        <strong>🎨 Dica:</strong> As cores definem a identidade visual do seu site. 
-        Use o seletor de cores ou digite o código HEX. Salve cada item individualmente após alterar.
-      </div>
+        <strong>⚠️ Atenção:</strong> As alterações serão aplicadas em todo o site após salvar. Recarregue a página para ver as mudanças.
+     </div>
 
       <div style={styles.content}>
         {configs.length === 0 && !carregando && (
